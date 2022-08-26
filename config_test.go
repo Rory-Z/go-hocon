@@ -352,6 +352,11 @@ func TestObject_String(t *testing.T) {
 		assertEquals(t, got, "{}")
 	})
 
+	t.Run("return the string of an object that contains a empty string", func(t *testing.T) {
+		got := Object{"a": String("")}.String()
+		assertEquals(t, got, "{a:\"\"}")
+	})
+
 	t.Run("return the string of an object that contains a single element", func(t *testing.T) {
 		got := Object{"a": Int(1)}.String()
 		assertEquals(t, got, "{a:1}")
@@ -381,6 +386,11 @@ func TestArray_String(t *testing.T) {
 	t.Run("return the string of an empty array", func(t *testing.T) {
 		got := Array{}.String()
 		assertEquals(t, got, "[]")
+	})
+
+	t.Run("return the string of an object that contains a empty string", func(t *testing.T) {
+		got := Array{String("")}.String()
+		assertEquals(t, got, "[\"\"]")
 	})
 
 	t.Run("return the string of an array that contains a single element", func(t *testing.T) {
