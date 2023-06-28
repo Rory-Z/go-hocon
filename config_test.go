@@ -357,6 +357,16 @@ func TestObject_String(t *testing.T) {
 		assertEquals(t, got, "{a:\"\"}")
 	})
 
+	t.Run("return the string of an object that contains a string element with sql query", func(t *testing.T) {
+		got := Object{"sql": String("SELECT * FROM \"t/#\"")}.String()
+		assertEquals(t, got, "{sql:\"SELECT * FROM \"t/#\"\"}")
+	})
+
+	t.Run("return the string of an object that contains multiple elements with sql query", func(t *testing.T) {
+		got := Object{"a": Int(1), "sql": String("SELECT * FROM \"t/#\"")}.String()
+		assertEquals(t, got, "{a:1, sql:\"SELECT * FROM \"t/#\"\"}")
+	})
+
 	t.Run("return the string of an object that contains a single element", func(t *testing.T) {
 		got := Object{"a": Int(1)}.String()
 		assertEquals(t, got, "{a:1}")
@@ -391,6 +401,16 @@ func TestArray_String(t *testing.T) {
 	t.Run("return the string of an object that contains a empty string", func(t *testing.T) {
 		got := Array{String("")}.String()
 		assertEquals(t, got, "[\"\"]")
+	})
+
+	t.Run("return the string of an object that contains multiple elements with sql query", func(t *testing.T) {
+		got := Array{String("SELECT * FROM \"my_table\"")}.String()
+		assertEquals(t, got, "[\"SELECT * FROM \"my_table\"\"]")
+	})
+
+	t.Run("return the string of an array that contains a single element with sql query", func(t *testing.T) {
+		got := Array{Int(1), String("SELECT * FROM \"my_table\"")}.String()
+		assertEquals(t, got, "[1,\"SELECT * FROM \"my_table\"\"]")
 	})
 
 	t.Run("return the string of an array that contains a single element", func(t *testing.T) {

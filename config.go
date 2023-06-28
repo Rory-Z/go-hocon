@@ -287,9 +287,12 @@ type String string
 func (s String) Type() Type { return StringType }
 
 func (s String) String() string {
-	str := strings.Trim(string(s), `"`)
+	str := string(s)
 	if str == "" {
 		return `""`
+	}
+	if strings.HasPrefix(str, `"`) && strings.HasSuffix(str, `"`) && strings.Count(str, `"`) == 2 {
+		str = strings.Trim(string(s), `"`)
 	}
 	compile := regexp.MustCompile("[\x20-\x40|\x5b-\x60|\x7b-\x7e]+")
 	if compile.MatchString(str) {
